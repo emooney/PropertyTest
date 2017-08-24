@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>PropertyTest</name>
-	<description>Hopefully this will trigger Jenkins</description>
+	<description>Hopefully this will trigger Jenkins.</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
