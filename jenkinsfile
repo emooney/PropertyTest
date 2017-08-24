@@ -1,40 +1,30 @@
-pipeline {
-    agent any
-	environment { 
-        CC = 'clang'
+node {
+ 	// Clean workspace before doing anything
+    deleteDir()
+
+    try {
+        stage ('Clone') {
+        	checkout scm
+        }
+        stage ('Build') {
+        	sh "echo 'shell scripts to build project...'"
+        }
+        stage ('Tests') {
+	        parallel 'static': {
+	            sh "echo 'shell scripts to run static tests...'"
+	        },
+	        'unit': {
+	            sh "echo 'shell scripts to run unit tests...'"
+	        },
+	        'integration': {
+	            sh "echo 'shell scripts to run integration tests...'"
+	        }
+        }
+      	stage ('Deploy') {
+            sh "echo 'shell scripts to deploy to server...'"
+      	}
+    } catch (err) {
+        currentBuild.result = 'FAILED'
+        throw err
     }
-    parameters {
-        string(name: 'Greeting', defaultValue: 'Hello', description: 'How should I greet the world?')
-    }	
-    stages {
-        stage('Diagnostic') {
-            steps {
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-            }
-        }
-		
-		 stage('Print Env var') {
-            environment { 
-                DEBUG_FLAGS = '-g'
-            }
-            steps {
-                sh 'printenv'
-            }
-        }
-		
-		 stage('Greetings') {
-            steps {
-                echo "${params.Greeting} World!"
-            }
-        }
-		
-    }
-    post {
-        always {
-            junit '**/target/*.xml'
-        }
-        failure {
-            mail to: eric.mooney@gmail.com, subject: 'The Pipeline failed :('
-        }
-    }	
 }
