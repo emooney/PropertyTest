@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.emooney.spring</groupId>
-	<artifactId>property-test</artifactId>
+	<artifactId>AutomatedDeploymentTest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>PropertyTest</name>
+	<name>AutomatedDeploymentTest</name>
 	<description>Hopefully this will trigger Jenkins.</description>
 
 	<parent>
